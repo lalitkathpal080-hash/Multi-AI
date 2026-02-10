@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Multi AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #0b001a;
+  color: #f8fafc;
+}
+
+.container {
+  max-width: 1200px;
+  margin-left: 0;
+  margin-right: auto;
+  padding: 30px 20px;
+}
+
+/* HERO */
+.hero h1 {
+  text-align: center;
+  color: #c084fc;
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  max-width: 600px;
+  opacity: 0.85;
+}
+
+/* SECTIONS */
+.section {
+  margin-top: 32px;
+}
+
+.section h1,
+.section h2 {
+  margin: 0 0 16px 0;
+  color: #c084fc;
+}
+
+.section p {
+  margin: 0 0 24px 0;
+  opacity: 0.85;
+  max-width: 600px;
+}
+
+/* BUTTONS */
+.btn {
+  width: 100%;
+  display: block;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* CARDS */
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 16px;
+  margin-top: 20px;
+}
+
+/* SELECT */
+select {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>MULTI AI</h1>
+    <p>
+      Find the right AI model for what you actually want to do.
+      No confusion. No clutter.
+    </p>
+  </div>
+
+  <!-- EXPLORE -->
+  <div class="section">
+    <button class="btn" onclick="window.location.href='models.html'">
+      Explore AI Models
+    </button>
+  </div>
+
+  <!-- CREATE IMAGES -->
+  <div class="section">
+    <h1>Create Images</h1>
+    <p>
+      To create stunning AI-generated images that are copyright free
+      and high quality, please refer to the Generative AI section.
+    </p>
+    <button class="btn" onclick="window.location.href='image.html'">
+      Image Generation AI Models
+    </button>
+  </div>
+
+  <!-- CREATE VIDEOS -->
+  <div class="section">
+    <h1>Create Videos</h1>
+    <p>
+      Generate high-quality AI videos using modern video generation models.
+    </p>
+    <button class="btn" onclick="window.location.href='video.html'">
+      Video Generation AI Models
+    </button>
+  </div>
+
+  <!-- PROMPTS -->
+  <div class="section">
+    <h1>Gemini Prompts</h1>
+    <p>
+      Free ready-to-use Gemini professional prompts for Instagram posts.
+    </p>
+    <button class="btn" onclick="window.location.href='prompts.html'">
+      Free Gemini Prompts
+    </button>
+  </div>
+
+  <!-- AI SELECTOR -->
+  <div class="section">
+    <h2>Feels confusing?</h2>
+    <p>Select what you want to do and we’ll suggest the best AI.</p>
+
+    <select id="need">
+      <option value="">-- Select your need --</option>
+      <option value="chat">Social conversation</option>
+      <option value="math">Mathematics questions</option>
+      <option value="notes">Notes & study help</option>
+      <option value="exam">Exam preparation</option>
+      <option value="code">Coding support</option>
+      <option value="debug">Bug fixing</option>
+      <option value="research">Research & explanations</option>
+      <option value="image">Image creation</option>
+      <option value="video">Video creation</option>
+    </select>
+
+    <button class="btn" style="margin-top:16px" onclick="suggestAI()">Submit</button>
+
+    <div id="result">
+    </div>
+<!-- FOOTER / CREDIT SECTION -->
+  <div id="site-footer"
+       style="margin-top:60px; text-align:center; opacity:0.85;">
+
+    <p style="margin-bottom:8px;">
+      Built with ❤️ by <strong>Lalit</strong>
+    </p>
+
+    <p style="max-width:600px; margin:0 auto 12px;">
+      Web enthusiast with over <strong>1 year of hands-on experience</strong> in
+      building clean, user-friendly websites and AI-focused platforms.
+    </p>
+
+    <p style="margin-bottom:4px;">
+      Looking for a simple, fast, and modern website?
+    </p>
+
+    <p>
+      📧 <a href="mailto:lalitkathpal080@gmail.com"
+            style="color:#c084fc; text-decoration:none;">
+        lalitkathpal080@gmail.com
+      </a>
+    </p>
+
+  </div>
+    </div>
+    
+  </div>
+
+</div>
+
+<script>
+const aiMap = {
+  chat: [
+    { name: "ChatGPT", url: "https://chat.openai.com", desc: "Best for conversations." },
+    { name: "Claude", url: "https://claude.ai", desc: "Thoughtful long responses." }
+  ],
+  math: [
+    { name: "ChatGPT", url: "https://chat.openai.com", desc: "Step-by-step math solutions." }
+  ],
+  notes: [
+    { name: "ChatGPT", url: "https://chat.openai.com", desc: "Notes and summaries." },
+    { name: "Claude", url: "https://claude.ai", desc: "Structured study notes." }
+  ],
+  exam: [
+    { name: "ChatGPT", url: "https://chat.openai.com", desc: "Exam prep help." }
+  ],
+  code: [
+    { name: "ChatGPT", url: "https://chat.openai.com", desc: "Code & debugging." },
+    { name: "Claude", url: "https://claude.ai", desc: "Clean logic explanations." }
+  ],
+  debug: [
+    { name: "ChatGPT", url: "https://chat.openai.com", desc: "Bug fixing." }
+  ],
+  research: [
+    { name: "Perplexity", url: "https://perplexity.ai", desc: "Research with sources." },
+    { name: "ChatGPT", url: "https://chat.openai.com", desc: "Explain concepts." }
+  ],
+  image: [
+    { name: "Gemini", url: "https://gemini.google.com", desc: "AI image generation." }
+  ],
+  video: [
+    { name: "Luma AI", url: "https://lumalabs.ai/dream-machine", desc: "AI video generation." }
+  ]
+};
+
+function suggestAI() {
+  const need = document.getElementById("need").value;
+  const result = document.getElementById("result");
+
+  if (!need) {
+    result.innerHTML = "<p>Please select an option.</p>";
+    return;
+  }
+
+  const ais = aiMap[need];
+  let output = "";
+
+  ais.forEach(ai => {
+    output += `
+      <div class="card">
+        <h3>${ai.name}</h3>
+        <p>${ai.desc}</p>
+        <button class="btn" onclick="window.open('${ai.url}','_blank')">
+          Open ${ai.name}
+        </button>
+      </div>
+      
+    `;
+  });
+
+  result.innerHTML = output;
+}
+</script>
+
+</body>

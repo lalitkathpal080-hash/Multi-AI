@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Image Generation AI – Multi AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* BASE */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #0b001a;
+  color: #f8fafc;
+}
+
+/* CONTAINER – IMPORTANT */
+.container {
+  max-width: 1200px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 30px 0;
+}
+
+/* HEADINGS */
+h1 {
+  color: #c084fc;
+  margin-bottom: 12px;
+}
+
+p {
+  max-width: 650px;
+  opacity: 0.85;
+}
+
+/* SECTIONS */
+.section {
+  margin-top: 64px;
+}
+
+/* GRID – 2 PER ROW */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 22px;
+  border-radius: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* BUTTON */
+.btn {
+  width: 100%;
+  margin-top: auto;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* MOBILE */
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- PAGE INTRO -->
+  <h1>Create Images</h1>
+  <p>
+    Create stunning AI-generated images that are high quality and
+    copyright free using modern generative AI models.
+  </p>
+
+  <!-- IMAGE AI MODELS -->
+  <div class="section">
+    <h1>Image Generation AI Models</h1>
+
+    <div class="grid">
+
+      <div class="card">
+  <h3>ChatGPT (DALL·E)</h3>
+  <p>
+    Generate high-quality AI images using DALL·E directly
+    inside ChatGPT with natural language prompts.
+  </p>
+  <button class="btn"
+    onclick="window.open('https://chat.openai.com','_blank')">
+    Open ChatGPT
+  </button>
+</div>
+
+<div class="card">
+  <h3>Grok</h3>
+  <p>
+    xAI’s model capable of generating images with a focus
+    on real-time and social context.
+  </p>
+  <button class="btn"
+    onclick="window.open('https://grok.x.ai','_blank')">
+    Open Grok
+  </button>
+</div>
+      
+      <div class="card">
+        <h3>Gemini</h3>
+        <p>
+          Google’s AI for generating realistic and creative images
+          with strong prompt understanding.
+        </p>
+        <button class="btn"
+          onclick="window.open('https://gemini.google.com','_blank')">
+          Open Gemini
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>DALL·E</h3>
+        <p>
+          OpenAI’s image generation model known for accuracy
+          and detailed visual outputs.
+        </p>
+        <button class="btn"
+          onclick="window.open('https://labs.openai.com','_blank')">
+          Open DALL·E
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>Midjourney</h3>
+        <p>
+          Artistic and cinematic image generation widely used
+          by designers and creators.
+        </p>
+        <button class="btn"
+          onclick="window.open('https://www.midjourney.com','_blank')">
+          Open Midjourney
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>Stable Diffusion</h3>
+        <p>
+          Open-source image generation model with high flexibility
+          and customization.
+        </p>
+        <button class="btn"
+          onclick="window.open('https://stability.ai','_blank')">
+          Open Stable Diffusion
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

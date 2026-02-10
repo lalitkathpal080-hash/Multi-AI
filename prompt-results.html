@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompts – Multi AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #0b001a;
+  color: #f8fafc;
+}
+
+.container {
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 30px 0;
+}
+
+h1 {
+  color: #c084fc;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 16px;
+}
+
+@media(max-width:640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1 id="title"></h1>
+
+<div id="promptGrid" class="grid"></div>
+
+</div>
+
+<script>
+const promptLibrary = [
+  {
+    gender: "male",
+    style: "professional",
+    image: "image/prompts/male-prof1.jpg",
+    text: "A high-resolution, cinematic, and photorealistic close-up profile tall vertical portrait of a man. The image features dramatic split-lighting with a vibrant, glowing red light illuminating the top of his face and a contrasting"
+  },
+  {
+    gender: "male",
+    style: "professional",
+    text: "Hands in Pockets - Relaxed Authority. A hyper-realistic cinematic editorial portrait of the uploaded person (preserve face 100%). He stands tall in a dark moody studio, surrounded by soft drifting smoke under a dramatic spotlight. Outfit: Oversized slate-blue luxury suit with wide-leg trousers, paired with slightly unbuttoned white silk shirt. Both hands tucked casually in pockets, shoulders relaxed, confident expression, head tilted slightly to left. Use the face from the uploaded reference image and preserve the same facial features — do not alter the face.",
+    image: "image/prompts/male-prof2.jpg"
+  },
+  {
+    gender: "male",
+    style: "professional",
+    text: "Create a vintage 1970s Bollywood-inspired photograph of a men whose face matches 100% with the uploaded image sitting casually on the hood of a classic car. he is dressed in a cream pinstriped blazer, cream bell-bottom trousers, & a dark brown shirt with the top buttons open, paired with brown formal shoes, giving a confident mafia-style look. The car has wide whitewall tires, chrome details, & a polished metallic body, reflecting sunlight. in the background, tall green trees and hedges frame the scene. The photograph has the warm",
+    image: "image/prompts/male-prof3.jpg"
+  },
+  {
+    gender: "male",
+    style: "professional",
+    text: "i a raw cinematic candid street A photograph of a young Southeast Asian handsome man with a thin beard, 3 Herringbone 3-Piece Suit. He is standing, leaning his back casually against the chaotic poster wall, My expression is confident and neutral, and Behind him, the wall is fully plastered with overlapping vintage music posters, soft silhouette of an old wooden window casts warm golden hour light across the posters, creating creamy highlights and shadows. Beside him sits a lush pot o.",
+    image: "image/prompts/male-prof4.jpg"
+  },
+  {
+    gender: "male",
+    style: "professional",
+    text: "Create a retro, vintage-inspired image - grainy yet bright - based on the reference picture. The boy should be dressed in a perfectly tailored deep-blue cotton blazer suit with subtle white pinstripes, paired with a crisp white shirt (sleeves slightly rolled up), styled in a Pinterest-inspired aesthetic. The vibe must capture the essence of a 90s movie dark-brown-haired hero, with silky, slightly wind-tousled hair and a small flower tucked casually behind his ear, enhanced by a windy, romantic atmosphere. He is standing outdoors as a few leaves blow in the air, wearing polished brown leather shoes that add a touch of timeless sophistication. Dramatic contrasts add mystery and artistry to the scene, creating a moody yet enchanting cinematic effect. His pose should suggest that he is reading a book, adding an intellectual, brooding charm to the overall scene. Use the face from the uploaded reference image and preserve the same facial features — do not alter the face.",
+    image: "image/prompts/male-prof5.jpg"
+  },
+  {
+    gender: "male",
+    style: "cool",
+    text: "With the person in image, casually leaning against a modified red supra mk4, on a quiet urban street at night. The street is wet and reflective, illuminated by neon and street lights, giving a moody, cinematic vibe. He wears a dark button-up shirt, loose blue jeans, and black Vans sneakers. The car's headlights glow. Shot from above with a dramatic angle, capturing both the car's detail and the reflective road. Inspired by Fast & Furious 2. Size 3:4. Use the face from the uploaded reference image and preserve the same facial features — do not alter the face.",
+    image: "image/prompts/male-cool3.jpg"
+  },
+  {
+    gender: "male",
+    style: "cool",
+    text: "Use my image with the face kept 100% accurate, exactly the same (do not alter my facial features, keep my identity intact). Create a black-and-white aesthetic portrait of me sitting on the floor in dramatic lighting. I am wearing an oversized dark coat. My pose is emotional and introspective, with one hand near my mouth and my head slightly turned to the side. Shadows from a window fall across the wall behind me, creating a moody and artistic atmosphere. The overall vibe is mysterious, emotional, and cinematic.",
+    image: "image/prompts/male-cool1.jpg"
+  },
+  {
+    gender: "male",
+    style: "cool",
+    text: "A creative photo, featuring an ultra-wide fisheye lens effect, creates a dramatic perspective with curved distortion throughout the composition. A man (photo uploaded), tall and well-built, stands in the middle of a modern urban area in an expressive pose. His feet are firmly planted on the gray granite floor, wearing white sneakers that stand out in the foreground. He wears black jeans, a grey long-sleeved shirt. Use the face from the uploaded reference image and preserve the same facial features — do not alter the face.",
+    image: "image/prompts/male-cool2.jpg"
+  },
+  {
+    gender: "male",
+    style: "cool",
+    text: "Take the face from the uploaded reference photo exactly 100% the same (do not alter his facial features, keep his identity intact). Create a cool young man with wavy, vintage-style hair, clean-cut look, wearing a white t-shirt and light-colored jeans. He is sitting comfortably on a wooden crate, looking to the right while holding a denim jacket. The background features a smoky blue-and-red effect blended into a bright black studio scene, creating a dramatic and stylish atmosphere.",
+    image: "image/prompts/male-cool4.jpg"
+  },
+  {
+    gender: "male",
+    style: "cool",
+    text: "Generate a vertical 9:16 high-resolution 8K vintage-style flash photograph entirely based on the uploaded reference photo, keeping the exact same face, hairstyle, and overall appearance of the subject with no changes. The image should depict a stylish white man standing confidently on a nighttime city street, captured with dramatic fisheye lens distortion. Apply subtle grain, light film scratches, and analog texture effects to achieve a nostalgic yet editorial feel. He is wearing an abstract red shirt with bold, expressive artistic patterns, partially unbuttoned to reveal a confident, edgy demeanor. Chunky metallic jewelry and fashionable sunglasses enhance his striking streetwear aesthetic. The city backdrop should be softened and transformed with cozy home party vibes—glowing red ambient lighting, delicate string lights hanging above, and a warm, intimate atmosphere that blends festivity with the urban night scene. Skin texture must look flawless and realistic, with dramatic lighting, soft shadows, and lens flash reflections for depth. Ensure no distortions, no anatomical flaws. Maintain all the characteristics of the main character from the uploaded photo while elevating the image into a cinematic, editorial-quality portrait.",
+    image: "image/prompts/male-cool5.jpg"
+  },
+  {
+    gender: "male",
+    style: "cool",
+    text: "Create a retro vintage grainy but bright image of the reference picture but draped in a perfect brown color Pinteresty. Wearing blue denim Levi's jeans, blue denim Levi's jacket with white sandow. It must feel like a 90s movie, short hair and romanticising environment. The man is standing against a solid wall with deep shadows and contrast drama, creating a mysterious and artistic atmosphere where the lighting is warm with golden tones evoking a sunset. Use the face from the uploaded reference image and preserve the same facial features — do not alter the face.",
+    image: "image/prompts/male-cool6.jpg"
+  },
+  {
+    gender: "male",
+    style: "traditional",
+    text: "moody studio portrait of the upload person, bethed in golden-orange spotlight that create glowing circular halo behind Thema on the wall. The warm light should sculpt the face and upper body with soft, sunset-like tones, while casting s strong head shadow to the right. Style the person. Her eye are closed and chin tilted slightly up.",
+    image: "image/prompts/male-traditional2.jpg"
+  },
+  {
+    gender: "male",
+    style: "traditional",
+    text: "Dreamy cinematic portrait of a young stylish young man standing in a tall grass field filled with soft white pampas. Outfit: a white button up loose fit shirt with sleeves slightly rolled and white trousers. Pose: standing naturally, body facing forward, head slightly tilted down, eyes looking softly downward with a calm and thoughtful expression. One hand holding a pampas flower gently in front, the other hand casually in his pocket. Background: softly blurred white pampas flower glowing in sunlight—dreamy, bright atmosphere. Camera angle: medium shot from the front at eye level and wide angle and full side frame. Style: cinematic, soft tones, pastel colours, for a glowing effect, not overly sharp, film-like mood. Use the face from the uploaded reference image and preserve the same facial features — do not alter the face.",
+    image: "image/prompts/male-traditional3.jpg"
+  },
+{
+    gender: "male",
+    style: "traditional",
+    text: "A stylish young man, looking thoughtful, with warm, dramatic lighting creating strong shadows on a textured background. He wearing a slightly unbuttoned collared shirt and tailored trousers, with a single red rose tucked into. facial features should be match 100% frim the uploaded image do not alter any facial features",
+    image: "image/prompts/male-traditional4.jpg"
+  },
+  {
+    gender: "male",
+    style: "traditional",
+    text: "Create a retro, vintage-inspired image - grainy yet bright - based on the reference picture. The boy should be wearing a white shirt with small brown flower prints, paired with plated beige pants styled in a Pinterest-inspired aesthetic. The vibe must capture the essence of a 90s movie dark-brown-haired baddie, hair waving by a windy, romantic atmosphere. He is sitting on a wooden bench as a few leaves blow in the air, while dramatic contrasts add mystery and artistry to the scene, creating a moody yet enchanting. Use the face from the uploaded reference image and preserve the same facial features — do not alter the face.",
+    image: "image/prompts/male-traditional5.jpg"
+  },
+  {
+    gender: "female",
+    style: "traditional",
+    text: "Take the face from the attached reference photo exactly 100% the same (do not alter her facial features, keep her identity intact). A vintage Indian woman portrait from the 1970s, styled in traditional Bollywood fashion. She has long, voluminous black hair adorned with two red roses tucked behind her ear. A bold black bindi sits on her forehead, and her large expressive eyes are highlighted with dramatic winged eyeliner. She wears heavy golden jhumka earrings and a delicate gold necklace. Her outfit is a saree in shades of black and purple with floral designs, paired with multiple bangles in gold, black, and purple. The woman’s pose is graceful, with her chin resting gently on her clasped hands, exuding elegance and charm. The background is soft and neutral, enhancing the retro aesthetic and focusing attention on her face and attire. The overall mood is glamorous, classic, and reminiscent of old Bollywood cinema posters.",
+    image: "image/prompts/female-traditional1.jpg"
+  },
+  {
+    gender: "female",
+    style: "traditional",
+    text: "Create a realistic vintage grainy but bright image of the reference picture but in an ancient hindu goddess type of attire and atmosphere. Refer to Hindu mythological females figures and add details like Long black hair and serene background. The goddess is standing amidst a cinematic surrounding with scenic views giving her presence a mysterious yet artistic edge. Define her body with flowy silhouette and sheer fabric. Use the face from the uploaded reference image and preserve the same facial features — do not alter the face.",
+    image: "image/prompts/female-traditional2.jpg"
+  },
+  {
+    gender: "female",
+    style: "traditional",
+    text: "Convert, 4k HD realistic, A stunning portrait of a young Indian woman (with the same face as the uploaded reference image, preserving 100% facial features without alteration) with long, dark, wavy hair cascading over her shoulders. She is wearing a translucent, elegant red saree draped over one shoulder, revealing a fitted blouse underneath. White flowers are tucked behind her right ear. She is looking slightly to her right, with a soft, serene expression. The background is a plain, warm-toned wall, illuminated by a warm light source from the right, creating a distinct, soft-edged shadow of her profile and hair on the wall behind her. The overall mood is retro and artistic.",
+    image: "image/prompts/female-traditional3.jpg"
+  },
+  {
+    gender: "female",
+    style: "traditional",
+    text: "In a perfect Navratri dress red color ghagra choli with black dupatta Pinteresty aesthetic look. It must feel like a nagada baje song deepika character movie ramleela with small flower tucked visibly into her curls and romanticising windy environment. The girl is standing against a solid wall deep shadows and contrast drama, creating a mysterious and artistic atmosphere where the lighting is warm with a golden tones of evoking a sunset or golden hour glow. The background is minimalist and slightly textured the expression on her face is moody, calm yet happy and introspective. Use the face from the uploaded reference image and preserve the same facial features — do not alter the face.",
+    image: "image/prompts/female-traditional4.jpg"
+  },
+  {
+    gender: "female",
+    style: "professional",
+    text: "A vintage-inspired, high-fashion editorial photograph shot on 35mm film stock with a soft, nostalgic aesthetic, featuring a stylish woman with uploaded face as reference walking confidently along a gravel path in a grand European garden. She is dressed in a crisp, white button-down shirt with an open collar and rolled sleeves, tucked into high-waisted, wide-leg trousers featuring a classic brown and beige houndstooth or small plaid check pattern. Her hair is styled in a voluminous, 90s-style blowout with soft, cascading waves catching the light. She holds a structured brown leather clutch in her right hand and a small object in her left, captured in a candid mid-stride pose. The background showcases a majestic, slightly out-of-focus French chateau estate with intricate stone architecture, a slate mansard roof, and dormer windows, framed by classical stone balustrades and large urns containing manicured topiary. The lighting is soft, diffused natural daylight creating a warm, sepia-tinted atmosphere with low contrast and subtle film grain, utilizing an 85mm focal length to compress the background, rendered with photorealistic textures and 8k clarity.",
+    image: "image/prompts/female-professional1.jpg"
+  },
+  {
+    gender: "female",
+    style: "professional",
+    text: "A hyper-realistic, high-fidelity lifestyle portrait shot on an 85mm lens with an f/1.8 aperture to create a creamy depth of field, capturing a stylish woman with uploaded face as reference sitting casually on a wooden park bench. She is dressed in a cozy autumn ensemble comprising an oversized sage green and cream plaid flannel shacket worn open over a fitted white ribbed turtleneck, paired with a long blue denim midi skirt featuring a front slit, and pristine white leather sneakers with gum soles. She holds a white ceramic mug with visible wisps of volumetric steam rising from it in her right hand, suggesting a warm beverage, while a structured cognac-brown leather backpack rests on the bench beside her. The setting is a picturesque park during peak autumn, with the ground thickly carpeted in crisp orange and brown maple leaves. The lighting is soft, diffused natural daylight, highlighting the intricate textures of the flannel, denim, and leather, while the background consists of beautifully blurred fall foliage and distant suburban architecture, rendered in 8k resolution with raytraced lighting and cinematic color grading.",
+    image: "image/prompts/female-professional2.jpg"
+  },
+  {
+    gender: "female",
+    style: "professional",
+    text: "A hyper-realistic, medium-shot portrait of a fashionable woman with uploaded face as reference seated at an outdoor Parisian bistro terrace during a snowy winter day, captured with an 85mm lens at f/1.8 for a creamy bokeh background. She is dressed in a striking monochromatic crimson ensemble featuring a plush, oversized red faux-fur coat with deep tactile texture and a matching red wool beret, paired with elegant cream-colored high-waisted trousers and intricate black floral lace gloves. She holds a white ceramic cappuccino cup with both hands close to her chest, with delicate wisps of volumetric steam rising into the cold air; she wears round, retro-style dark sunglasses. On the round wooden bistro table in the immediate foreground, which is lightly dusted with fresh powdery snow, sits a professional DSLR camera with a strap and a sleek smartphone lying flat. The background features a soft-focus, atmospheric view of a grand Gothic cathedral and historic French architecture under a flat, overcast winter sky, creating a soft, diffused lighting setup that highlights the vivid red of her outfit against the muted greys and whites of the snowy cityscape, rendered in 8k resolution with high-fidelity detailing on the fur fibers and lace patterns.",
+    image: "image/prompts/female-professional3.jpg"
+  },
+  {
+    gender: "female",
+    style: "professional",
+    text: "A high-fashion, full-body editorial photograph captured with an 85mm lens, showcasing a stylish woman with the uploaded face as reference standing confidently in a luxurious, bohemian-chic living room. She is dressed in a sophisticated ensemble featuring a fitted rust-colored ribbed turtleneck tucked into high-waisted, voluminous cream-colored pleated trousers that taper at the ankles, secured by a wide brown leather belt with a large circular gold buckle. Over this, she wears an oversized, floor-length patchwork knit cardigan with geometric blocks of chocolate brown, mocha, and white. Her look is accessorized with large, dangling gold statement earrings and pointed brown leather ankle boots. The lighting is soft, diffused natural daylight flooding in from the left, creating gentle highlights on her wavy, voluminous dark hair and the textures of the clothing. The background features a minimalist white interior with a large circular wooden architectural shelf niche on the left and a framed abstract earth-tone painting on the right. In the immediate foreground, blurred slightly for depth of field, are a woven rattan chair on the left and a tall wicker hourglass stool on the right, framing the subject. The image boasts 8k resolution, highly intricate fabric textures showing the weave of the wool and the sheen of the leather, with a photorealistic Octane Render quality and soft, warm color grading.",
+    image: "image/prompts/female-professional4.jpg"
+  },
+  {
+    gender: "female",
+    style: "professional",
+    text: "A stunning full-body fashion portrait shot with an 85mm lens at f/1.8, capturing a chic woman standing centrally on a textured cobblestone street in Paris during golden hour. The subject features **uploaded face as reference**, modeled with hyper-realistic skin texture and subsurface scattering. She is dressed in a luxurious, voluminous chunky-knit cream sweater covered in textured bobbles and 3D pom-poms, tucked into high-waisted, wide-leg burgundy trousers with sharp pleats and a smooth drape. She wears sleek cream leather ankle boots with heels and statement red tassel earrings, holding a matching burgundy clutch with pearl embellishments against her thigh. Her pose is confident with one hand on her hip. The lighting is soft, warm, and volumetric, creating a gentle rim light on her wavy hair, while the background is a beautifully blurred bokeh of classic French architecture, limestone buildings, and indistinct pedestrians in the distance. The image is rendered in 8k resolution with intricate fabric details, raytraced lighting, and a high-fashion editorial aesthetic.",
+    image: "image/prompts/female-professional5.jpg"
+  },
+  {
+    gender: "female",
+    style: "cool",
+    text: "Cinematic motivational portrait of the reference woman (use reference image for exact face and skin tone), standing outdoors against a sunrise background, dressed in a flowing saree or salwar with vibrant colors. She is gazing upward with determination, one hand raised slightly in a gesture of strength. The atmosphere is inspiring, golden-hour lighting, retro grain for artistic depth, symbolizing empowerment.",
+    image: "image/prompts/female-cool1.jpg"
+  },
+  {
+    gender: "female",
+    style: "cool",
+    text: "Create a sophisticated art gallery portrait combining fashion and culture. The woman wears elegant contemporary fashion - a tailored midi dress in a solid bold color (deep burgundy, forest green, classic black), structured blazer with wide-leg trousers, or artistic statement piece with unique silhouette. Accessories are minimal but refined - small leather bag, delicate gold jewelry, stylish but understated. Hair is polished - sleek low bun, smooth straight style, or elegant waves. Makeup is refined and modern - clean natural base, defined brows, subtle smokey eye, nude or berry lip. She's positioned in a contemporary art gallery or museum - standing before a large colorful abstract painting, walking through white gallery halls, or contemplating art with thoughtful expression. The setting features clean white walls, dramatic artwork visible but slightly out of focus, polished concrete or wooden floors, sophisticated gallery lighting. Natural light streams through gallery windows. Her pose is elegant and cultured - standing thoughtfully with hand near chin, walking gracefully, or seated on modern gallery bench. Expression is intellectual and refined. Shot with balanced, natural color grading emphasizing clean aesthetic. Keep facial features perfect. Sophisticated lifestyle photography, museum-quality 4K resolution",
+    image: "image/prompts/female-cool2.jpg"
+  },
+  {
+    gender: "female",
+    style: "cool",
+    text: "Create a breathtaking natural outdoor portrait bathed in golden hour magic. The woman wears casual elegant attire - a flowing sundress in soft neutral or earth tones, loose linen outfit, or comfortable jeans with a simple fitted top. She's positioned in a stunning natural setting: open meadow filled with wildflowers, beside a serene lake, under ancient trees, or in rolling countryside. The lighting is the warm, magical glow of sunset creating a golden halo around her silhouette with beautiful lens flare. Hair moves naturally in a gentle breeze - loose flowing waves or soft windswept style. Makeup is minimal and fresh emphasizing natural beauty. Her expression is peaceful and genuine - a soft smile, contemplative gaze, or joyful laugh. She might be touching wildflowers, walking through the field, or sitting naturally on grass. The mood is serene, free, and connected with nature. Shot with wide aperture creating beautiful background bokeh. Warm color palette emphasizing golden and amber tones. Preserve facial features exactly. Organic natural light style, 4K quality.",
+    image: "image/prompts/female-cool3.jpg"
+  },
+  {
+    gender: "female",
+    style: "cool",
+    text: "Create a trendy casual street style portrait perfect for Instagram. The woman rocks contemporary urban fashion - distressed boyfriend jeans, graphic crop top or band tee, oversized denim jacket or leather bomber, paired with chunky white sneakers or combat boots. Accessories include layered gold necklaces, a crossbody bag, and vintage sunglasses. Hair is styled effortlessly - messy bun, loose beach waves, or sleek straight with middle part. Makeup is fresh and minimal with a natural glow. She's captured mid-stride or casually leaning against a colorful graffiti wall on a vibrant city street. Background features urban elements: murals, brick walls, city architecture, blurred street activity. Lighting is bright natural daylight with warm tones. Her expression is confident and carefree - a candid laugh or over-the-shoulder glance. Shot with shallow depth of field keeping focus sharp on subject. Color palette is vibrant and saturated. Preserve exact facial features. Modern street photography style, 4K quality.",
+    image: "image/prompts/female-cool4.jpg"
+  },
+  {
+    gender: "female",
+    style: "cool",
+    text: "Create a cozy, intimate cafe lifestyle portrait perfect for Instagram aesthetic. The woman sits at a charming cafe table - rustic wooden surface with a steaming latte featuring beautiful foam art, croissant on a vintage plate, or stack of books beside her. She wears casual chic attire: oversized sweater in cream or camel, denim jacket, or soft knit cardigan. A cozy scarf might be draped around her shoulders. Hair is natural and relaxed - loose waves, low ponytail, or messy bun with effortless style. Makeup is minimal and natural emphasizing glowing skin. She's captured candidly: sipping coffee thoughtfully, smiling warmly at the camera, or gazing out the window. The cafe setting features warm ambient lighting from pendant lamps, natural light streaming through large windows, plants on tables, and cozy interior decor visible but softly blurred in background. Color palette features warm browns, creams, and soft lighting creating an inviting atmosphere. Shallow depth of field keeps focus on subject. Preserve exact facial features. Lifestyle photography style, warm and inviting 4K quality.",
+    image: "image/prompts/female-cool5.jpg"
+  }
+];
+  
+  
+const params = new URLSearchParams(window.location.search);
+const gender = params.get("gender");
+const style = params.get("style");
+
+document.getElementById("title").innerText =
+  `${gender.toUpperCase()} • ${style.toUpperCase()} PROMPTS`;
+
+const grid = document.getElementById("promptGrid");
+
+promptLibrary
+  .filter(p => p.gender === gender && p.style === style)
+  .forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+  <img 
+    src="${p.image}" 
+    alt="Prompt example"
+    style="width:100%; border-radius:12px; margin-bottom:12px;"
+  >
+
+  <p style="font-size:14px;">${p.text}</p>
+
+  <button 
+    style="margin-top:12px; padding:10px;
+           border:none; border-radius:10px;
+           background:#7c3aed; color:white;
+           cursor:pointer;"
+    onclick="navigator.clipboard.writeText('${p.text}')">
+    Copy Prompt
+  </button>
+`;
+    
+    grid.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
